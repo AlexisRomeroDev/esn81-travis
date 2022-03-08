@@ -18,7 +18,6 @@ class EmailController
             // Vérifier l'absence du mail en BDD
             $pdo = new \PDO('mysql:host=localhost;dbname=ESN81', 'alex', 'alex');
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
             $sql = "SELECT count(*) FROM subscription WHERE address = :email"; 
             $stmt = $pdo->prepare($sql); 
             $stmt->execute(['email' => $_POST['email']]); 

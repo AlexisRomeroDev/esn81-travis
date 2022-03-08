@@ -13,7 +13,12 @@ class EmailController
         $this->pdo = $pdo;
     }
 
-    public function displayForm(){
+    /**
+     *
+     * @return Response
+     */
+    public function displayForm():Response
+    {
 
         $template = 'form.php';
         $code = 200;

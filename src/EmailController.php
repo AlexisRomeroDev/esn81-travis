@@ -7,6 +7,11 @@ use App\Response;
 
 class EmailController
 {
+    private $pdo;
+
+    public function __construct($pdo){
+        $this->pdo = $pdo;
+    }
 
     public function displayForm(){
 
@@ -16,10 +21,9 @@ class EmailController
         if(isset($_POST['email'])) {
 
             // Vérifier l'absence du mail en BDD
-            $pdo = new \PDO('mysql:host=localhost;dbname=ESN81', 'alex', 'alex');
-            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            
             $sql = "SELECT count(*) FROM subscription WHERE address = :email"; 
-            $stmt = $pdo->prepare($sql); 
+            $stmt = $this->pdo->prepare($sql); 
             $stmt->execute(['email' => $_POST['email']]); 
             $number_of_rows = $stmt->fetchColumn();
 
@@ -36,7 +40,7 @@ class EmailController
 
             // Insérer l'email
             $sql = "INSERT INTO subscription (address) VALUES (:email)";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['email' => $_POST['email']]); 
 
             // // Retourner un code 201

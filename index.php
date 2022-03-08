@@ -8,7 +8,10 @@ require __DIR__.'/vendor/autoload.php';
 
 use App\EmailController;
 
-$controller = new EmailController();
+$pdo = new \PDO('mysql:host=localhost;dbname=ESN81', 'alex', 'alex');
+$pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+$controller = new EmailController($pdo);
 
 $response = $controller->displayForm();
 
